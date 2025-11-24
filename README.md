@@ -20,6 +20,6 @@ It supports two trigger modes — after a selected number of seconds, or at a sp
 > 
 > ⚠️ Use the code at your own risk.
 > 
-> ⚠️ The current version is not optimized for production and may behave unpredictably.
+> ⚠️ The current version is not optimized and may behave unpredictably.
 
 Contributions and bug reports are welcome.
