@@ -3,6 +3,12 @@
 Notifier is a simple SwiftUI application that lets you schedule local notifications on iOS devices.  
 It supports two trigger modes — after a selected number of seconds, or at a specific date and time.
 
+## Prank Use Only
+
+This application is intended **for prank purposes only**.  
+It is not designed for serious or production use.  
+Do not rely on it for important reminders or notifications.
+
 ## Features
 
 - Schedule notifications using:
