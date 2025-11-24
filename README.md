@@ -13,6 +13,13 @@ It supports two trigger modes — after a selected number of seconds, or at a sp
 - **Clear All** button to reset all inputs
 - Notification scheduling using the `UserNotifications` framework
 
+## Technologies Used
+
+- Swift  
+- SwiftUI  
+- UserNotifications Framework  
+
+## Installation
 
 > [!CAUTION]
 > 
@@ -22,4 +29,16 @@ It supports two trigger modes — after a selected number of seconds, or at a sp
 > 
 > ⚠️ The current version is not optimized and may behave unpredictably.
 
-Contributions and bug reports are welcome.
+**Contributions and bug reports are welcome.**
+
+1. Clone the repository:
+```
+git clone https://github.com/kv34dev/Notific
+```
+
+2. Open the project in Xcode:
+```
+open Notific.xcodeproj
+```
+3. Build and run on a device or simulator.
+
