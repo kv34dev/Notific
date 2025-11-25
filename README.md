@@ -31,9 +31,9 @@ Do not rely on it for important reminders or notifications.
 > 
 > ⚠️ There are known bugs and incomplete features.
 > 
-> ⚠️ Use the code at your own risk.
-> 
 > ⚠️ The current version is not optimized and may behave unpredictably.
+>
+> ⚠️ Use the code at your own risk.
 
 **Contributions and bug reports are welcome.**
 
