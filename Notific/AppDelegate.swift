@@ -3,22 +3,33 @@
 /// Change the icon for the icon you want
 /// Some default icons are already included in the "icons" folder
 /// Available icons: Instagram, Telegram, Gosuslugi
-
+///
 /// THIS APPLICATION IS FOR PRANK PURPOSES ONLY.
 
 import SwiftUI
+import UserNotifications
 
-class AppDelegate: NSObject, UIApplicationDelegate {
+class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
-        UNUserNotificationCenter.current().delegate = self
+        
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self
+        
+        center.requestAuthorization(options: [.alert, .sound]) { granted, error in
+            if let error = error {
+                print("Notification permission error: \(error.localizedDescription)")
+            } else {
+                print("Notifications granted: \(granted)")
+            }
+        }
+        
         return true
     }
-}
-
-extension AppDelegate: UNUserNotificationCenterDelegate {
+    
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
