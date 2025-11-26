@@ -9,7 +9,10 @@
 import SwiftUI
 
 @main
-struct NotificApp: App {
+struct NotifierApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
