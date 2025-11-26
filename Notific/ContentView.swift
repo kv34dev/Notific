@@ -3,7 +3,7 @@
 /// Change the icon for the icon you want
 /// Some default icons are already included in the "icons" folder
 /// Available icons: Instagram, Telegram, Gosuslugi
-
+///
 /// THIS APPLICATION IS FOR PRANK PURPOSES ONLY.
 
 import SwiftUI
@@ -18,6 +18,8 @@ struct ContentView: View {
     
     @State private var seconds: Double = 5
     @State private var dateTime: Date = Date().addingTimeInterval(60)
+    
+    private let minimumDate = Date()
     
     var body: some View {
         NavigationStack {
@@ -60,11 +62,13 @@ struct ContentView: View {
                                 Text("Select Date & Time")
                                     .font(.headline)
                                 
-                                DatePicker("",
-                                           selection: $dateTime,
-                                           in: Date()...,
-                                           displayedComponents: [.date, .hourAndMinute])
-                                    .labelsHidden()
+                                DatePicker(
+                                    "",
+                                    selection: $dateTime,
+                                    in: minimumDate...,
+                                    displayedComponents: [.date, .hourAndMinute]
+                                )
+                                .labelsHidden()
                             }
                         }
                         
@@ -77,7 +81,7 @@ struct ContentView: View {
                     // MARK: - Buttons
                     VStack(spacing: 16) {
                         
-                        modernButton(title: "Send", color: .blue) {
+                        modernButton(title: "Send", color: .blue, icon: "paperplane") {
                             scheduleNotification()
                         }
                         
@@ -92,10 +96,7 @@ struct ContentView: View {
                 }
                 .padding(.top, 24)
             }
-            .navigationTitle("Notifier")
-        }
-        .onAppear {
-            requestPermissions()
+            .navigationTitle("Notific")
         }
     }
     
@@ -107,20 +108,24 @@ struct ContentView: View {
             .background(Color(.systemGray6))
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .font(.body)
+            .textInputAutocapitalization(.sentences)
     }
     
     // MARK: - Button
-    func modernButton(title: String,
-                      color: Color,
-                      icon: String? = nil,
-                      action: @escaping () -> Void) -> some View {
+    func modernButton(
+        title: String,
+        color: Color,
+        icon: String? = nil,
+        action: @escaping () -> Void
+    ) -> some View {
         
         Button(action: action) {
             HStack {
                 if let icon = icon {
                     Image(systemName: icon)
                 }
-                Text(title).font(.headline)
+                Text(title)
+                    .font(.headline)
             }
             .frame(maxWidth: .infinity)
             .padding()
@@ -128,14 +133,9 @@ struct ContentView: View {
             .background(color.gradient)
             .clipShape(RoundedRectangle(cornerRadius: 14))
         }
+        .buttonStyle(.plain)
     }
 
-    
-    // MARK: - Permission
-    func requestPermissions() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
-    }
-    
     
     // MARK: - Scheduling
     func scheduleNotification() {
@@ -148,7 +148,9 @@ struct ContentView: View {
         
         switch sendMode {
         case .seconds:
-            trigger = UNTimeIntervalNotificationTrigger(timeInterval: seconds, repeats: false)
+            let interval = max(1, seconds)
+            trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+            
         case .calendar:
             let dateComponents = Calendar.current.dateComponents(
                 [.year, .month, .day, .hour, .minute],
@@ -157,11 +159,17 @@ struct ContentView: View {
             trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
         }
         
-        let request = UNNotificationRequest(identifier: UUID().uuidString,
-                                            content: content,
-                                            trigger: trigger)
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: trigger
+        )
         
-        UNUserNotificationCenter.current().add(request)
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Notification error: \(error.localizedDescription)")
+            }
+        }
     }
     
     
@@ -181,3 +189,7 @@ enum SendMode {
     case seconds
     case calendar
 }
+
+//#Preview {
+//    ContentView()
+//}
